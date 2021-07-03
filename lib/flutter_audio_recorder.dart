@@ -215,7 +215,7 @@ class FlutterAudioRecorder {
 /// Recording Object - represent a recording file
 class Recording {
   /// File path
-  String path;
+  String path ;
 
   /// Extension
   String extension;

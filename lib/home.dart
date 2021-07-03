@@ -46,138 +46,146 @@ class _HomeState extends State<Home> {
     TextStyle theme1 = TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold);
     TextStyle theme2 = TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic);
 
-    return MaterialApp(
-      home: Scaffold(
+    double sizeX = MediaQuery.of(context).size.width;
+    double sizeY = MediaQuery.of(context).size.height;
+    return Scaffold(
         appBar: AppBar(
           title: Text('Azhar Multi-Media OTP System',style: theme1),
           backgroundColor: Colors.white10,
         ),
-        body: ListView(
-          children: [
-            Column(
-              children:<Widget> [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text('Verification Code ',style: theme2,),
-                          SizedBox(width: 8,),
-                          SizedBox(width: 150,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                enabledBorder: InputBorder.none,
-                                //enabled: false,
-                                border: InputBorder.none,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                                  borderSide: BorderSide(color: Colors.grey),
+        body: Container(
+           width: sizeX,
+          child: ListView(
+            children: [
+              Column(
+                children:<Widget> [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text('Verification Code ',style: theme2,),
+                            SizedBox(width: 8,),
+                            SizedBox(width: 150,
+                              child: TextField(
+
+                                decoration: InputDecoration(
+                                  enabledBorder:OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  //enabled: false,
+                                  border: InputBorder.none,
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                        SizedBox(height: 25,),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Recorder',style: theme2,),
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 25,),
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Recorder',style: theme2,),
-                          ],
                         ),
-                      ),
-                      SizedBox(width: 5,),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 35),
-                        child: Row(
-                          children: [
-                            new FlatButton(
-                              onPressed: () {
-                                switch (_currentStatus) {
-                                  case RecordingStatus.Initialized:
-                                    {
-                                      _start();
+                        SizedBox(width: 5,),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 35),
+                          child: Row(
+                            children: [
+                              new FlatButton(
+                                onPressed: () {
+                                  switch (_currentStatus) {
+                                    case RecordingStatus.Initialized:
+                                      {
+                                        _start();
+                                        break;
+                                      }
+                                    case RecordingStatus.Recording:
+                                      {
+                                        _pause();
+                                        break;
+                                      }
+                                    case RecordingStatus.Paused:
+                                      {
+                                        _resume();
+                                        break;
+                                      }
+                                    case RecordingStatus.Stopped:
+                                      {
+                                        _init();
+                                        break;
+                                      }
+                                    default:
                                       break;
-                                    }
-                                  case RecordingStatus.Recording:
-                                    {
-                                      _pause();
-                                      break;
-                                    }
-                                  case RecordingStatus.Paused:
-                                    {
-                                      _resume();
-                                      break;
-                                    }
-                                  case RecordingStatus.Stopped:
-                                    {
-                                      _init();
-                                      break;
-                                    }
-                                  default:
-                                    break;
-                                }
-                              },
-                              child: _buildText(_currentStatus),
-                              color: Colors.lightBlue,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            new FlatButton(
-                              onPressed:
-                              _currentStatus != RecordingStatus.Unset ? _stop : null,
-                              child:
-                              new Text("Stop", style: TextStyle(color: Colors.white)),
-                              color: Colors.blueAccent.withOpacity(0.5),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            new FlatButton(
-                              onPressed: onPlayAudio,
-                              child:
-                              new Text("Play", style: TextStyle(color: Colors.white)),
-                              color: Colors.blueAccent.withOpacity(0.5),
-                            ),
-                          ],
+                                  }
+                                },
+                                child: _buildText(_currentStatus),
+                                color: Colors.lightBlue,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              new FlatButton(
+                                onPressed:
+                                _currentStatus != RecordingStatus.Unset ? _stop : null,
+                                child:
+                                new Text("Stop", style: TextStyle(color: Colors.white)),
+                                color: Colors.blueAccent.withOpacity(0.5),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              new FlatButton(
+                                onPressed: onPlayAudio,
+                                child:
+                                new Text("Play", style: TextStyle(color: Colors.white)),
+                                color: Colors.blueAccent.withOpacity(0.5),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
 
-                      SizedBox(height: 25,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children:<Widget> [
-                          Text('Take A Picture ',style: theme2,),
-                        ],
-                      ),
-                      SizedBox(height: 15,),
-                      IconButton(
-                        icon : Icon(Icons.camera_alt),
-                        iconSize: 80,
-                        onPressed: pickercamera,
-                      ),
-                      SizedBox(height: 20,),
-                      Container(
-                        child : _file == null ?  Text('There Is No Pic') : Image.file(_file,scale: 6,),
-                      ),
-                      SizedBox(height: 20,),
-                    ],
+                        SizedBox(height: 25,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:<Widget> [
+                            Text('Take A Picture ',style: theme2,),
+                          ],
+                        ),
+                        SizedBox(height: 15,),
+                        IconButton(
+                          icon : Icon(Icons.camera_alt),
+                          iconSize: 80,
+                          onPressed: pickercamera,
+                        ),
+                        SizedBox(height: 20,),
+                        Container(
+                          child : _file == null ?  Text('There Is No Pic') : Image.file(_file,scale: 6,),
+                        ),
+                        SizedBox(height: 20,),
+                      ],
+                    ),
                   ),
-                ),
-                RaisedButton(
-                  child: Text('Verify',style: theme1,),
-                  color: Colors.black,
-                  onPressed: (){},
-                ),
-              ],
-            ),
-          ],
+                  // ignore: deprecated_member_use
+                  RaisedButton(
+                    child: Text('Verify',style: theme1,),
+                    color: Colors.black,
+                    onPressed: (){},
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 
